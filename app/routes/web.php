@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Conytollers\DisplayController;
+use App\Http\Controllers\DisplayController;
 
 /*
 |--------------------------------------------------------------------------
