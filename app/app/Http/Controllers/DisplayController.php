@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class DisplayController extends Controller
 {
-    public function index()
+    public function showLogin()
     {
-        return view('home');
+        return view('login.login_form');
+    }
+
+    public function login()
+    {
+
     }
 }

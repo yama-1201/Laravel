@@ -14,9 +14,8 @@ use App\Http\Controllers\DisplayController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+// ログインの処理
+Route::get('/',[DisplayController::class,'showLogin'])->name('showLogin');
 
+Route::post('login',[DisplayController::class,'login'])->name('login');
 
-Route::get('/',[DisplayController::class,'index']);
