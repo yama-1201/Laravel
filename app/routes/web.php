@@ -19,3 +19,7 @@ Route::get('/',[DisplayController::class,'showLogin'])->name('showLogin');
 
 Route::post('login',[DisplayController::class,'login'])->name('login');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -16,7 +16,7 @@
                 <h1 class="h3 mb-3 fw-normal">ログイン</h1>
 
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingInput"　name="email"  placeholder="name@example.com">
+                    <input type="email" class="form-control" id="floatingInput" name="email"  placeholder="name@example.com">
                     <label for="floatingInput">メールアドレス</label>
                 </div>
                 <div class="form-floating">
