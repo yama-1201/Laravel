@@ -9,18 +9,23 @@ class Review extends Model
 {
     use HasFactory;
 
+    protected $guarded = 
+    [
+        'id',
+    ];
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\User');
     }
 
     public function report()
     {
-        return $this->hasMany(Report::class);
+        return $this->hasMany('App\Models\Report');
     }
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo('App\Models\Store');
     }
 }

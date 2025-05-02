@@ -8,19 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class Users extends Model
 {
     use HasFactory;
+
+    protected $guarded = 
+    [
+        'id',
+    ];
     
-    public function store()
+    public function stores()
     {
-        return $this->hasMany(Store::class);
+        return $this->hasMany('App\Models\Store');
     }
 
-    public function review()
+    public function reviews()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany('App\Models\Review');
     }
 
     public function reports()
-{
-    return $this->hasMany(Report::class);
-}
+    {
+        return $this->hasMany('App\Models\Report');
+    }
 }

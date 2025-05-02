@@ -9,13 +9,18 @@ class Store extends Model
 {
     use HasFactory;
 
+    protected $guarded = 
+    [
+        'id',
+    ];
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\User');
     }
 
     public function bookmarks()
     {
-        return $this->hasMany(Bookmark::class);
+        return $this->hasMany('App\Models\Bookmark');
     }
 }

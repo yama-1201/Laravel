@@ -14,15 +14,17 @@ use App\Http\Controllers\DisplayController;
 |
 */
 
+Route::get('/',[DisplayController::class,'index']);
+
 // トップページの処理
-Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');
-Route::post('toppage',[DisplayController::class,'toppage'])->name('toppage');
+// Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');
+// Route::post('toppage',[DisplayController::class,'toppage'])->name('toppage');
 
 // ログインの処理
-Route::get('/',[DisplayController::class,'showLogin'])->name('showLogin');
-Route::post('login',[DisplayController::class,'login'])->name('login');
+// Route::get('/',[DisplayController::class,'showLogin'])->name('showLogin');
+// Route::post('login',[DisplayController::class,'login'])->name('login');
 
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

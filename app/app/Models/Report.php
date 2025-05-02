@@ -9,13 +9,18 @@ class Report extends Model
 {
     use HasFactory;
 
+    protected $guarded = 
+    [
+        'id',
+    ];
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\User');
     }
 
     public function review()
     {
-        return $this->belongsTo(Review::class);
+        return $this->belongsTo('App\Models\Review');
     }
 }
