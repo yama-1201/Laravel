@@ -14,12 +14,12 @@ use App\Http\Controllers\DisplayController;
 |
 */
 
-Route::get('/',[DisplayController::class,'index']);
+// Route::get('/',[DisplayController::class,'index']);
 
 
 // トップページの処理
-// Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');
-// Route::post('toppage',[DisplayController::class,'toppage'])->name('toppage');
+Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');
+Route::post('toppage',[DisplayController::class,'toppage'])->name('toppage');
 
 // ログインの処理
 // Route::get('/',[DisplayController::class,'showLogin'])->name('showLogin');
