@@ -4,18 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Store;
+use App\Models\Review;
+use App\Models\Report;
+use App\Models\Bookmark;
 
 
 class DisplayController extends Controller
 {
+   
     public function index()
     {
         $users = User::all();
+        $stores = Store::all();
+        $reviews = Review::all();
+        $reports = Report::all();
+        $bookmarks = Bookmark::all();
 
-        return view('index',['users' => $users]);
-
+        return view('index',
+        [
+            'users' => $users, 
+            'stores' => $stores,
+            'reviews' => $reviews,
+            'reports' => $reports,
+            'bookmarks' => $bookmarks
+        
+        ]);
     }
-
 
 
 
@@ -23,7 +38,7 @@ class DisplayController extends Controller
     // トップページ
     // public function showToppage()
     // {
-        // return view('layouts.toppage');
+    //   return view('layouts.toppage');
     // }
 
     // public function toppage()
