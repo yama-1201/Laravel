@@ -47,8 +47,8 @@
                         <div class="card h-100">
                             <img src="path/to/your/image.jpg" class="card-img-top" alt="店舗の画像">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $->$name }}</h5>
-                                <p class="card-text">{{ $store->$ }}</p>
+                                <h5 class="card-title">{{ $review->$store->name }}</h5>
+                                <p class="card-text">{{ $review->image }}</p>
                                 <p class="card-text"><small class="text-muted">東京都世田谷区〇〇</small></p>
                             </div>
                         </div>

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name','10');
             $table->string('email','30');
             $table->string('image','100')->nullable();
-            $table->string('password','10');
-            $table->string('remember_token','100')->nullable();
+            $table->string('password','255');
+            $table->string('remember_token','255')->nullable();
             $table->tinyInteger('del_flg')->default(0);
             $table->tinyInteger('role');
             $table->timestamps();
