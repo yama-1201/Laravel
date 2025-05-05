@@ -14,11 +14,6 @@ class BookmarksTableSeeder extends Seeder
      */
     public function run(): void
     {
-        //サンプル
-        DB::table('bookmarks')->insert([
-            'user_id'=>1,
-            'store_id'=>2,
-            'created_at'=>Carbon::now(),
-        ]);
+        \App\Models\Bookmark::factory()->count(10)->create();
     }
 }

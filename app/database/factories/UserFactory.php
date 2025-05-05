@@ -26,7 +26,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => substr(fake()->unique()->safeEmail, 0, 30),
             'password' => static::$password ??= Hash::make('password'),
             'del_flg' => fake()->numberBetween(0,1),
             'role' => fake()->randomElement([1,2,3]),

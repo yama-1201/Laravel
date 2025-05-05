@@ -14,12 +14,6 @@ class ReportsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        //サンプル
-        DB::table('reports')->insert([
-            'review_id'=>1,
-            'user_id'=>1,
-            'comment'=>'',
-            'created_at'=>Carbon::now(),
-        ]);
+        \App\Models\Report::factory()->count(10)->create();
     }
 }
