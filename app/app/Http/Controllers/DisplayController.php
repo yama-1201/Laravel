@@ -34,12 +34,14 @@ class DisplayController extends Controller
     // トップページ
     public function showToppage()
     {
-      return view('layouts.toppage.toppage');
+        $reviews = Review::with('store')->get();
+        
+      return view('layouts.toppage.toppage',compact('reviews'));
     }
 
     public function toppage()
     {
-
+        
     }
 
 

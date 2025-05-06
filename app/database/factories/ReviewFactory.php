@@ -19,11 +19,14 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
+        $image = fake()->image('public/storage/images', 400, 300, null, false); 
+
         return [
             //factory
             'user_id' => User::where('role',1)->inRandomOrder()->first()->id,
             'store_id' => Store::inRandomOrder()->first()->id,
             'title' => fake()->text(30),
+            'image' => 'public/storage/images/' . $image,
             'content' => fake()->sentence(),
             'rating' => fake()->numberBetween(1, 5),
             'created_at' => now(),

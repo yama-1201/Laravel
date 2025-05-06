@@ -15,60 +15,23 @@
                     <button type="submit" class="btn btn-primary">検索</button>
                 </form>
             </div>
+            <!-- 検索ここまで -->
 
-
-            <div class="row justify-conten-aroud mt-3 mb-2">
-                    <button type="button" class="btn btn-primary">+ 収入</button>
-                <button type="button" class="btn btn-primary">+ 支出</button>
-                </a>
-            </div>  
-            <div class="row justify-content-around">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class='text-center'>収入</div>
-                        </div>
-                        <div class="card-body">
+            <!-- 投稿 -->
+            <div class="container my-5">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach ($reviews as $review)
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="{{ $review->review_image }}" class="card-img-top" alt="レビュー画像">
                             <div class="card-body">
-                                <table class='table'>
-                                    <thead>
-                                        <tr>
-                                            <th scope='col'>詳細</th>
-                                            <th scope='col'>日付</th>
-                                            <th scope='col'>金額</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- ここに収入を表示する -->
-                                       
-                                    </tbody>
-                                </table>
+                                <h5 class="card-title">{{ $review->store->name }}</h5>
+                                <p class="card-text">点数: {{ $review->rating }}点</p>
+                                <p class="card-text">住所: {{ $review->store->address }}</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <div class='text-center'>支出</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-body">
-                            <table class='table'>
-                                <thead>
-                                    <tr>
-                                        <th scope='col'>詳細</th>
-                                        <th scope='col'>日付</th>
-                                        <th scope='col'>金額</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- ここに支出を表示する -->
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </main>
