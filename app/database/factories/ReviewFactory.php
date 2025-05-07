@@ -19,14 +19,16 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
-        $image = fake()->image('public/storage/images', 400, 300, null, false); 
+        $imageFiles = glob(public_path('storage/images/*.{jpg,jpeg,png,webp}'),GLOB_BRACE);
+        $imagePath = fake()->randomElement($imageFiles);
+        $imageName = basename($imagePath);
 
         return [
             //factory
             'user_id' => User::where('role',1)->inRandomOrder()->first()->id,
             'store_id' => Store::inRandomOrder()->first()->id,
             'title' => fake()->text(30),
-            'image' => 'public/storage/images/' . $image,
+            'image' => 'storage/images/' . $imageName,
             'content' => fake()->sentence(),
             'rating' => fake()->numberBetween(1, 5),
             'created_at' => now(),

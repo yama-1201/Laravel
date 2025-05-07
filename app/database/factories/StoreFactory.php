@@ -17,12 +17,14 @@ class StoreFactory extends Factory
      */
     public function definition(): array
     {
-        $image = fake()->image('public/storage/images', 400, 300, null, false); 
+        $imageFiles = glob(public_path('storage/images/*.{jpg,jpeg,png,webp}'),GLOB_BRACE);
+        $imagePath = fake()->randomElement($imageFiles);
+        $imageName = basename($imagePath);
 
         return [
             'user_id' => User::where('role',1)->inRandomOrder()->first()->id,
             'name' => fake()->lastName() . '商店',
-            'image_path' => 'storage/images/' . $image,
+            'image_path' => 'storage/images/' . $imageName,
             'description' => fake()->sentence(),
             'address' => fake() -> address(),
             'created_at' => now(),

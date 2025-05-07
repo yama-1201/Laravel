@@ -19,6 +19,11 @@ class Store extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\Review');
+    }
+
     public function bookmarks()
     {
         return $this->hasMany('App\Models\Bookmark');
