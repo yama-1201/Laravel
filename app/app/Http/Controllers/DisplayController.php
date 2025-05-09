@@ -15,8 +15,6 @@ class DisplayController extends Controller
     // トップページ　店舗一覧画面
     public function showToppage(Request $request)
     {
-        // レビュー平均点
-        // $stores = Store::withAvg('reviews', 'rating')->get();
 
 
     
@@ -52,10 +50,26 @@ class DisplayController extends Controller
         
     }
 
-    // 店舗詳細画面
-    public function showShopdetail()
+    // 店舗一覧
+    public function showShopall()
     {
-    
+        $stores = Store::withAvg('reviews', 'rating')->get();
+
+        return view('layouts.shop.shop_all',compact('stores'));
+    }
+
+    public function shopall()
+    {
+
+    }
+
+    // 店舗詳細画面
+    public function showShopdetail($id)
+    {
+        $store = Store::with(['reviews.user'])->findOrFail($id);
+        $store = Store::withAvg('reviews', 'rating')->findOrFail($id);
+
+        return view('layouts.shop.shop_detail',compact('store'));
     }
 
     public function shopdetail()
@@ -66,13 +80,13 @@ class DisplayController extends Controller
 
 
     // ログイン
-    // public function showLogin()
-    // {
-    //     return view('login.login_form');
-    // }
+    public function showLogin()
+    {
+        return view('login.login_form');
+    }
 
-    // public function login()
-    // {
+    public function login()
+    {
 
-    // }
+    }
 }

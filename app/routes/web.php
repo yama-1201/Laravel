@@ -13,7 +13,7 @@ use App\Http\Controllers\DisplayController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Auth::routes();
 // Route::get('/',[DisplayController::class,'index'])->name('home');
 
 
@@ -21,15 +21,19 @@ use App\Http\Controllers\DisplayController;
 Route::get('/toppage',[DisplayController::class,'showToppage'])->name('showToppage');
 Route::post('/toppage',[DisplayController::class,'toppage'])->name('toppage');
 
+// 店舗一覧
+Route::get('/shopall',[DisplayController::class,'showShopall'])->name('showShopall');
+Route::post('/shopall',[DisplayController::class,'shopall'])->name('shopall');
+
 // 店舗詳細画面
-Route::get('/shopdetail',[DisplayController::class,'showShopdetail'])->name('showShopdetail');
-Route::post('/shopdetail',[DisplayController::class,'shopdetail'])->name('shopdetail');
+Route::get('/shopdetail/{id}',[DisplayController::class,'showShopdetail'])->name('showShopdetail');
+Route::post('/shopdetail/{id}',[DisplayController::class,'shopdetail'])->name('shopdetail');
 
 // ログインの処理
-// Route::get('/',[DisplayController::class,'showLogin'])->name('showLogin');
-// Route::post('login',[DisplayController::class,'login'])->name('login');
+Route::get('/login', [DisplayController::class, 'showLogin'])->name('showLogin');
+Route::post('/login', [DisplayController::class, 'login'])->name('login');
 
 
-Auth::routes();
+
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

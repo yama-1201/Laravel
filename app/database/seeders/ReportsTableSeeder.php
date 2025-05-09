@@ -14,6 +14,6 @@ class ReportsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Report::factory()->count(10)->create();
+        \App\Models\Report::factory()->count(20)->create();
     }
 }

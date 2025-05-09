@@ -22,7 +22,7 @@
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     @foreach ($reviews as $review)
                     <div class="col">
-                        <a href="{{ route('shopdetail') }}">
+                        <a href="{{ route('shopdetail', ['id' => $review->id]) }}">
                             <div class="card h-100">
                                 <img src="{{ asset($review->image) }}" class="card-img-top img-fluid" alt="レビュー画像">
                                 <div class="card-body">

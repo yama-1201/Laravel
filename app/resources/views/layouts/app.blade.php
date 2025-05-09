@@ -22,9 +22,10 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container d-flex justify-content-between align-items-center">
-                <a class="navbar-brand" href="{{ url(Auth::check() ? '/dashboard' : '/') }}">
+                <a class="navbar-brand" href="{{ route('toppage') }}">
                     レビューサイト
                 </a>
+                <a class="nav-link" href="{{ route('showShopall') }}">店舗の一覧</a>
                 
                     <div class ="d-flex align-items-center">
                         @auth
@@ -51,11 +52,9 @@
 
                         @guest
                             <div class="navbar-nav d-flex flex-row">
-                                @if (Route::has('login'))
-                                    <div class="nav-item">
-                                        <a class="nav-link" href="{{ route('login') }}">ログイン</a>
-                                    </div>
-                                @endif
+                                <div class="nav-item">
+                                    <a class="nav-link" href="{{ route('showLogin') }}">ログイン</a>
+                                </div>
                             </div>
                         @endguest
                     </div>

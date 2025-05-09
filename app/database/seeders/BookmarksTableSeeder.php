@@ -14,6 +14,6 @@ class BookmarksTableSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Bookmark::factory()->count(10)->create();
+        \App\Models\Bookmark::factory()->count(20)->create();
     }
 }

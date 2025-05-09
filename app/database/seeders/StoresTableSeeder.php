@@ -14,7 +14,7 @@ class StoresTableSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Store::factory()->count(10)->create();
+        \App\Models\Store::factory()->count(20)->create();
         
     }
 }
