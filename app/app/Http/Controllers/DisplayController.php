@@ -8,6 +8,7 @@ use App\Models\Store;
 use App\Models\Review;
 use App\Models\Report;
 use App\Models\Bookmark;
+use Illuminate\Support\Facades\Auth;
 
 
 class DisplayController extends Controller
@@ -77,7 +78,9 @@ class DisplayController extends Controller
     // マイページ
     public function showMypage()
     {
-        return view('layouts.mypage.mypage');
+        $user = Auth::user();
+
+        return view('layouts.mypage.mypage',compact('user'));
     }
 
     public function mypage()
@@ -91,8 +94,8 @@ class DisplayController extends Controller
         return view('login.login_form');
     }
 
-    public function login()
+    public function login(Request $request)
     {
-
+        return redirect()->route('showMypage');
     }
 }

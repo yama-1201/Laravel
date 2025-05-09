@@ -1,31 +1,32 @@
 @extends('layouts.app')
 @section('content')
         <main class="py-4">
-            <!-- 投稿 -->
+            <!-- プロフィール -->
             <div class="container my-5">
-                <div class="col-md-2 text-center user-icon">
-                    <img src="/api/placeholder/120/120" alt="ユーザーアイコン" class="mb-2">
-                    <h5 class="user-name fw-bold">ユーザー名</h5>
-                </div>
-                <div class="col-md-10">
-                <div class="card h-100">
-                    <div class="card-body">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col card">
+                    <img src="{{ $user ? asset('storage/' . $user->image) : '/images/default-user.png' }}">
+                    <h5 class="user-name fw-bold">{{$user->name}}</h5>
+                    </div>
+                    <div class="col card">
                         <h5 class="card-title">プロフィール</h5>
                         <p class="card-text">プロフィール文がここに表示されます。ユーザーについての紹介文や自己紹介などが表示されるエリアです。</p>
                     </div>
-                </div>
-                <div class="position-absolute top-0 end-0">
-                    <div class="d-grid gap-2">
-                        <a href="#" class="btn btn-outline-primary btn-sm">
-                            <i class="fas fa-user-edit"></i> ユーザー情報編集
-                        </a>
-                        <a href="#" class="btn btn-outline-danger btn-sm">
-                            <i class="fas fa-user-times"></i> ユーザー退会
-                        </a>
+                    <div class="col">
+                        <div class="d-flex flex-column align-items-center">
+                            <a href="#" class="btn btn-primary btn-sm w-50">
+                                <i class="fas fa-user-edit"></i> ユーザー情報編集
+                            </a>
+                            <a href="#" class="btn btn-danger btn-sm mt-5 w-50">
+                                <i class="fas fa-user-times"></i> ユーザー退会
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <div class="border-bottom border-secondary mt-5"></div>
+                
 
-                <h2 class="text-center mb-4">投稿一覧</h2>
+                <h2 class="text-center mb-4 mt-5">投稿一覧</h2>
 
                 <div class="col">
                     <div class="card h-100">

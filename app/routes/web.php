@@ -19,6 +19,9 @@ Auth::routes();
 // Route::get('/',[DisplayController::class,'index'])->name('home');
 
 Route::group(['middleware' => 'auth'],function(){
+    // マイページ
+    Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
+    Route::post('/mypage',[DisplayController::class,'mypage'])->name('mypage');
 
 
 });
@@ -38,9 +41,6 @@ Route::post('/shopdetail/{id}',[DisplayController::class,'shopdetail'])->name('s
 Route::get('/login', [DisplayController::class, 'showLogin'])->name('showLogin');
 Route::post('/login', [DisplayController::class, 'login'])->name('login');
 
-// マイページ
-Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
-Route::post('/mypage',[DisplayController::class,'maypage'])->name('mypage');
 
 
 

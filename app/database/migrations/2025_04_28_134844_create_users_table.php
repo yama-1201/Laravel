@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('remember_token','255')->nullable();
             $table->tinyInteger('del_flg')->default(0);
             $table->tinyInteger('role');
+            $table->text('profile')->nullable();;
             $table->timestamps();
         });
     }

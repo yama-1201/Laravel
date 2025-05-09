@@ -31,7 +31,7 @@
                         @if(Auth::check())
                             <div class="navbar-nav d-flex flex-row">
                                 <div class="nav-item dropdown">
-                                    <span class="my-navbar-item">{{ Auth::user()->name }}</span>
+                                <a href="{{ route('showMypage') }}">{{ Auth::user()->name }}</a>
                                     /
                                     <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
