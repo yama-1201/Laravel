@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisplayController;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +18,13 @@ use App\Http\Controllers\DisplayController;
 Auth::routes();
 // Route::get('/',[DisplayController::class,'index'])->name('home');
 
+Route::group(['middleware' => 'auth'],function(){
 
+
+});
 // トップページ(店舗一覧)の処理
-Route::get('/toppage',[DisplayController::class,'showToppage'])->name('showToppage');
-Route::post('/toppage',[DisplayController::class,'toppage'])->name('toppage');
+Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');
+Route::post('/',[DisplayController::class,'toppage'])->name('toppage');
 
 // 店舗一覧
 Route::get('/shopall',[DisplayController::class,'showShopall'])->name('showShopall');
@@ -33,6 +38,9 @@ Route::post('/shopdetail/{id}',[DisplayController::class,'shopdetail'])->name('s
 Route::get('/login', [DisplayController::class, 'showLogin'])->name('showLogin');
 Route::post('/login', [DisplayController::class, 'login'])->name('login');
 
+// マイページ
+Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
+Route::post('/mypage',[DisplayController::class,'maypage'])->name('mypage');
 
 
 

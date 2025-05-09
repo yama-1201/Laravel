@@ -15,10 +15,6 @@ class DisplayController extends Controller
     // トップページ　店舗一覧画面
     public function showToppage(Request $request)
     {
-
-
-    
-
         // 検索
         $keyword = $request->input('keyword');
         $rating = $request->input('rating');
@@ -78,6 +74,16 @@ class DisplayController extends Controller
     }
 
 
+    // マイページ
+    public function showMypage()
+    {
+        return view('layouts.mypage.mypage');
+    }
+
+    public function mypage()
+    {
+
+    }
 
     // ログイン
     public function showLogin()

@@ -28,35 +28,25 @@
                 <a class="nav-link" href="{{ route('showShopall') }}">店舗の一覧</a>
                 
                     <div class ="d-flex align-items-center">
-                        @auth
+                        @if(Auth::check())
                             <div class="navbar-nav d-flex flex-row">
                                 <div class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
-                                    </a>
-
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            ログアウト
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </div>
+                                    <span class="my-navbar-item">{{ Auth::user()->name }}</span>
+                                    /
+                                    <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                    
                                 </div>
                             </div>
-                        @endauth
-
-                        @guest
+                        @else
                             <div class="navbar-nav d-flex flex-row">
                                 <div class="nav-item">
                                     <a class="nav-link" href="{{ route('showLogin') }}">ログイン</a>
                                 </div>
                             </div>
-                        @endguest
+                        @endif
                     </div>
             </div>    
         </nav>
