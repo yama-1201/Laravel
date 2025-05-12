@@ -18,7 +18,7 @@
               @csrf
               <div class="form-group">
                 <label for="email">メールアドレス</label>
-                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" />
+                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" />
               </div>
               <div class="form-group">
                 <label for="password">パスワード</label>
@@ -31,11 +31,11 @@
           </div>
         </nav>
         <div class="d-flex justify-content-center mt-3">
-          <a class="mx-3">パスワードの変更はこちらから</a>
-          <a class="mx-3">店舗登録の方はこちら</a>
+          <a class="mx-3" href="#">パスワードの変更はこちらから</a>
+          <a class="mx-3" href="#">店舗登録の方はこちら</a>
         </div>
         <div class="text-center mt-3">
-          <a>新規登録の方はこちら</a>
+          <a href="{{ route('showNewuser') }}">新規登録の方はこちら</a>
         </div>
       </div>
     </div>

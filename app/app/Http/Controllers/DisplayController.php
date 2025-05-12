@@ -10,7 +10,7 @@ use App\Models\Report;
 use App\Models\Bookmark;
 use Illuminate\Support\Facades\Auth;
 
-
+// データや画面の表示
 class DisplayController extends Controller
 {
     // トップページ　店舗一覧画面
@@ -88,14 +88,5 @@ class DisplayController extends Controller
 
     }
 
-    // ログイン
-    public function showLogin()
-    {
-        return view('login.login_form');
-    }
-
-    public function login(Request $request)
-    {
-        return redirect()->route('showMypage');
-    }
+    
 }

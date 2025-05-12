@@ -1,7 +1,8 @@
 <?php
-
+namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisplayController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -38,8 +39,16 @@ Route::get('/shopdetail/{id}',[DisplayController::class,'showShopdetail'])->name
 Route::post('/shopdetail/{id}',[DisplayController::class,'shopdetail'])->name('shopdetail');
 
 // ログインの処理
-Route::get('/login', [DisplayController::class, 'showLogin'])->name('showLogin');
-Route::post('/login', [DisplayController::class, 'login'])->name('login');
+Route::get('/login', [LoginController::class, 'showLogin'])->name('showLogin');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+// ログイン新規登録
+Route::get('/newuser', [LoginController::class, 'showNewuser'])->name('showNewuser');
+Route::post('/newuser', [LoginController::class, 'newuser'])->name('newuser');
+// ログイン確認画面
+Route::post('/newuser/newuser_conf', [LoginController::class, 'showNewuserconf'])->name('showNewuserconf');
+// ログイン完了画面
+Route::get('/newuser_comp', [LoginController::class, 'showNewusercomp'])->name('showNewusercomp');
 
 
 
