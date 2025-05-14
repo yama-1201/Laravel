@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisplayController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -24,6 +25,9 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
     Route::post('/mypage',[DisplayController::class,'mypage'])->name('mypage');
 
+    // ユーザー情報の編集
+    Route::get('/edit_user/{id}',[RegistrationController::class,'showEdituser'])->name('showEdituser');
+    Route::post('/edit_user/{id}',[RegistrationController::class,'edituser'])->name('edituser');
 
 });
 // トップページ(店舗一覧)の処理

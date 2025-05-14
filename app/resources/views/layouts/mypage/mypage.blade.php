@@ -4,9 +4,8 @@
             <!-- プロフィール -->
             <div class="container my-5">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col card">
-                    <img src="{{ $user ? asset('storage/' . $user->image) : '/images/default-user.png' }}">
-                    <h5 class="user-name fw-bold">{{$user->name}}</h5>
+                    <div class="col">
+                    <h5 class="fw-bold">ユーザー名：{{$user->name}}</h5>
                     </div>
                     <div class="col card">
                         <h5 class="card-title">プロフィール</h5>
@@ -14,12 +13,8 @@
                     </div>
                     <div class="col">
                         <div class="d-flex flex-column align-items-center">
-                            <a href="#" class="btn btn-primary btn-sm w-50">
-                                <p class="fas fa-user-edit">ユーザー情報編集</p> 
-                            </a>
-                            <a href="#" class="btn btn-danger btn-sm mt-5 w-50">
-                                <p class="fas fa-user-times">ユーザー退会</p> 
-                            </a>
+                            <a href="{{ route('showEdituser' , ['id' => $user['id']]) }}" class="btn btn-primary btn-sm w-50">ユーザー情報編集</a>
+                            <a href="#" class="btn btn-danger btn-sm mt-5 w-50">ユーザー退会</a>
                         </div>
                     </div>
                 </div>
