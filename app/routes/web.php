@@ -29,6 +29,10 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/edit_user/{id}',[RegistrationController::class,'showEdituser'])->name('showEdituser');
     Route::post('/edit_user/{id}',[RegistrationController::class,'edituser'])->name('edituser');
 
+    // 退会処理
+    Route::get('/delete_user/{id}',[RegistrationController::class,'showUserdelete'])->name('showUserdelete');
+    Route::post('/delete_user/{id}',[RegistrationController::class,'userdelete'])->name('userdelete');
+
 });
 // トップページ(店舗一覧)の処理
 Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');

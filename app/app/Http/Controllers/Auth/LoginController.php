@@ -56,11 +56,12 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required']
         ]);
-    
-        if (Auth::attempt($credentials)) {
+   
+        //  del_flg=0の人がログインできる
+        if (Auth::attempt(array_merge($credentials, ['del_flg' => 0]))) {
             // セッションの鍵
             $request->session()->regenerate();
-            return redirect()->route('showMypage');
+            return redirect('/mypage');
         }
     
         return back()->withErrors([

@@ -21,27 +21,52 @@ class RegistrationController extends Controller
    public function edituser(int $id, Request $request)
    {
    
-    $user = Auth::user();
+        $user = Auth::user();
 
-    $request->validate([
-        'email' => 'required|email',
-        'name' => 'required|string',
-        'password' => 'nullable|string|confirmed',
-        'profile' => 'nullable|string',
-    ]);
+        $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|string',
+            'password' => 'nullable|string|confirmed',
+        ]);
 
-    $user->email = $request->email;
-    $user->name = $request->name;
-    $user->profile = $request->profile;
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->profile = $request->profile;
 
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect('/mypage');
     }
 
-    $user->save();
+    // 退会処理
+    public function showUserdelete(int $id)
+    {
+        $user = Auth::user();
+        return view('layouts.mypage.user_delete', compact('user'));
+    }
 
-    return redirect('/mypage');
-}
+    public function userdelete(int $id, Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'password' => 'required|string',
+        ]);
+
+        // 自分のIDと同じかチェック
+        if ($user && $user->id === $id){
+            $user->del_flg = 1;
+            $user->save();
+
+            Auth::logout();
+        }
+
+        return redirect('/');
+    }
 
     
 }

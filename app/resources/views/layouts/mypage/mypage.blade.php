@@ -14,13 +14,13 @@
                     <div class="col">
                         <div class="d-flex flex-column align-items-center">
                             <a href="{{ route('showEdituser' , ['id' => $user['id']]) }}" class="btn btn-primary btn-sm w-50">ユーザー情報編集</a>
-                            <a href="#" class="btn btn-danger btn-sm mt-5 w-50">ユーザー退会</a>
+                            <a href="{{ route('showUserdelete' , ['id' => $user['id']]) }}" class="btn btn-danger btn-sm mt-5 w-50">ユーザー退会</a>
                         </div>
                     </div>
                 </div>
                 <div class="border-bottom border-secondary mt-5"></div>
                 
-
+                <!-- 投稿一覧 -->
                 <h2 class="text-center mb-4 mt-5">投稿一覧</h2>
                 <div class="container my-5">
                     @forelse ($reviews as $review)
@@ -42,8 +42,9 @@
                         </div>
                     @endforelse
                 </div>
-                <div class="text-center mt-3">
-                    <a href="#" class="btn btn-primary">投稿をすべて見る</a>
+                <div class="d-flex justify-content-center mt-3">
+                    <a href="#" class="btn btn-primary mx-5">投稿をすべて見る</a>
+                    <a href="#" class="btn btn-primary mx-5">レビュー投稿する</a>
                 </div>
             </div>
         </main>
