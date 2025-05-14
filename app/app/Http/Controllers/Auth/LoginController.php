@@ -60,7 +60,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             // セッションの鍵
             $request->session()->regenerate();
-            return redirect()->intended('showMypage');
+            return redirect()->route('showMypage');
         }
     
         return back()->withErrors([
@@ -69,8 +69,12 @@ class LoginController extends Controller
     }
 
     // ログイン新規登録
-    public function showNewuser()
+    public function showNewuser(Request $request)
      {
+        if ($request->session()->has('user_data')) {
+            session()->flashInput($request->session()->get('user_data'));
+        }
+    
         return view('login.newuser');
      }
 
@@ -85,37 +89,68 @@ class LoginController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $user = User::create([
-             'email' => $request->email,
-             'name' => $request->name,
-             'password' => Hash::make($request->password), 
-             'role' => '1',
-         ]);
+        $request->session()->put('user_data', [
+            'email' => $request->email,
+            'name' => $request->name,
+            'password' => $request->password,
+        ]);
 
-         auth()->login($user);
-
-         return redirect()->route('showMypage');
+         return redirect()->route('showNewuserconf');
 
     }
 
     // 確認画面
     public function showNewuserconf(Request $request)
     {
-        // セッションに保存
-        $request->session()->put('user_data', [
-            'email' => $request->email,
-            'name' => $request->name,
-            'password' => $request->password,
-        ]);
-        
+        // セッションから取り出す
+        $userData = $request->session()->get('user_data');
+    
+        if (!$userData) {
+            return redirect()->route('showNewuser');
+        }
+    
         return view('login.newuser_conf', [
-            'email' => $request->email,
-            'name' => $request->name,           
+            'email' => $userData['email'],
+            'name' => $userData['name'],
         ]);
     }
 // ログイン完了画面
     public function showNewusercomp()
     {
-        return view('login.newuser_comp');
+        return view('login.newuser_comp') ;       
+    }
+    public function newusercomp(Request $request)
+    {
+        $userData = $request->session()->get('user_data');
+
+        if (!$userData) 
+        {
+            return redirect()->route('showNewuser');
+        }
+
+        // DBに登録
+        $user = User::create([
+            'email' => $userData['email'],
+            'name' => $userData['name'],
+            'password' => Hash::make($userData['password']),
+            'role' => '1',
+        ]);
+
+
+        // セッションから削除
+        $request->session()->forget('user_data');
+
+        return redirect()->route('showNewusercomp');
+    }
+
+    // ログアウト
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

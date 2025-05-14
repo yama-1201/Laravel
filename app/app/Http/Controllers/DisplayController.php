@@ -80,7 +80,9 @@ class DisplayController extends Controller
     {
         $user = Auth::user();
 
-        return view('layouts.mypage.mypage',compact('user'));
+        $reviews = $user->reviews()->latest()->take(3)->get();
+
+        return view('layouts.mypage.mypage',compact('user', 'reviews'));
     }
 
     public function mypage()

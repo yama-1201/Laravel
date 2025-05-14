@@ -46,11 +46,13 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/newuser', [LoginController::class, 'showNewuser'])->name('showNewuser');
 Route::post('/newuser', [LoginController::class, 'newuser'])->name('newuser');
 // ログイン確認画面
-Route::post('/newuser/newuser_conf', [LoginController::class, 'showNewuserconf'])->name('showNewuserconf');
+Route::get('/newuser_conf', [LoginController::class, 'showNewuserconf'])->name('showNewuserconf');
 // ログイン完了画面
 Route::get('/newuser_comp', [LoginController::class, 'showNewusercomp'])->name('showNewusercomp');
+Route::post('/newuser_comp', [LoginController::class, 'newusercomp'])->name('newusercomp');
 
-
+// ログアウト
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

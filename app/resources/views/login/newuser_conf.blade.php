@@ -7,26 +7,21 @@
         <nav class="card mt-5">
           <div class="card-header text-center">会員登録確認</div>
           <div class="card-body">
-            @if($errors->any())
-              <div class="alert alert-danger">
-                @foreach($errors->all() as $message)
-                  <p>{{ $message }}</p>
-                @endforeach
-              </div>
-            @endif
-            <form action="{{ route('newuser') }}" method="POST">
+            <form action="{{ route('newusercomp') }}" method="POST">
               @csrf
+                <input type="hidden" name="email" value="{{ $email }}">
+                <input type="hidden" name="name" value="{{ $name }}">
               <div class="form-group">
                 <label for="email">メールアドレス</label>
-                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" readonly/>
+                <p>{{ $email }}</p>
               </div>
               <div class="form-group">
                 <label for="name">ユーザー名</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" readonly/>
+                <p>{{ $name }}</p>
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-primary">登録する</button>
-                <a href="{{ route('showNewuser') }}" class="btn btn-secondary">戻る</a>
+                <a href="{{ route('showNewuser') }}" class="btn btn-secondary mt-3">戻る</a>
+                <button type="submit" class="btn btn-primary mt-3">登録する</button>
               </div>
             </form>
           </div>

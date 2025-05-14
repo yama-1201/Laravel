@@ -29,17 +29,18 @@
                 
                     <div class ="d-flex align-items-center">
                         @if(Auth::check())
-                            <div class="navbar-nav d-flex flex-row">
-                                <div class="nav-item dropdown">
-                                <a href="{{ route('showMypage') }}">{{ Auth::user()->name }}</a>
-                                    /
-                                    <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                    
-                                </div>
+                        <div class="navbar-nav d-flex flex-row align-items-center">
+                            <div class="d-flex align-items-center">
+                                <a href="{{ route('showMypage') }}" class="me-2">{{ Auth::user()->name }}</a>
+                                <span class="mx-1">/</span>
+                                <a class="ms-2" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    ログアウト
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf 
+                                </form>   
                             </div>
+                        </div>
                         @else
                             <div class="navbar-nav d-flex flex-row">
                                 <div class="nav-item">
