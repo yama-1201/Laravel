@@ -23,11 +23,11 @@
                 <!-- 投稿一覧 -->
                 <h2 class="text-center mb-4 mt-5">投稿一覧</h2>
                 <div class="container my-5">
-                    @forelse ($reviews as $review)
-                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        @forelse ($reviews as $review)
                             <div class="col">
                                 <div class="card h-100">
-                                    <img src="{{ asset($review->image) }}" class="card-img-top img-fluid" alt="レビュー画像">
+                                    <img src="{{ asset('storage/' . $review->image) }}" class="card-img-top img-fluid" alt="レビュー画像">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $review->title }}</h5>
                                         <p class="card-text">点: {{ $review->rating }}点</p>
@@ -35,16 +35,15 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @empty
+                        @empty
                         <div class="d-flex justify-content-center align-items-center">
                             <p class="text-center mb-0">まだ投稿していません。</p>
                         </div>
-                    @endforelse
+                        @endforelse
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center mt-3">
-                    <a href="#" class="btn btn-primary mx-5">投稿をすべて見る</a>
-                    <a href="#" class="btn btn-primary mx-5">レビュー投稿する</a>
+                    <a href="{{ route('showPostall', ['id' => $user->id]) }}" class="btn btn-primary mx-5">投稿をすべて見る</a>
                 </div>
             </div>
         </main>

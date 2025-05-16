@@ -33,6 +33,16 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/delete_user/{id}',[RegistrationController::class,'showUserdelete'])->name('showUserdelete');
     Route::post('/delete_user/{id}',[RegistrationController::class,'userdelete'])->name('userdelete');
 
+    // レビュー投稿
+    Route::get('/post/{id}',[RegistrationController::class,'showPost'])->name('showPost');
+    Route::post('/post/{id}',[RegistrationController::class,'post'])->name('post');
+
+    // 自分のレビュー投稿一覧
+    Route::get('/post_all/{id}',[RegistrationController::class,'showPostall'])->name('showPostall');
+
+    // レビュー詳細
+    Route::get('/review_detail/{id}',[RegistrationController::class,'showReviewdetail'])->name('showReviewdetail');
+
 });
 // トップページ(店舗一覧)の処理
 Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');

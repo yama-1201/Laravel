@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Store;
+use App\Models\Review;
 
 // ユーザーの新規登録処理
 class RegistrationController extends Controller
@@ -67,6 +69,70 @@ class RegistrationController extends Controller
 
         return redirect('/');
     }
+
+    // レビュー投稿画面
+    public function showPost(int $id)
+    {
+        $user = Auth::user();
+        $store = Store::findOrFail($id);
+
+        return view('layouts.mypage.post', compact('user', 'store'));
+    }
+
+    public function post(int $id, Request $request)
+    {
+        $user = Auth::user();
+
+        $store = Store::findOrFail($id);
+
+        // バリデーション
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'rating' => 'required|string',
+            'image' => 'nullable|image',
+        ]);
+
+        $review = new Review();
+
+        $review->user_id = $user->id;   
+        $review->store_id = $store->id;
+        $review->title = $request->title;
+        $review->content = $request->content;
+        $review->rating = $request->rating;
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images', 'public');
+            $review->image = $path;
+        }
+
+        $review->save();
+
+        return redirect('/mypage');
+    }
+
+    public function showPostall(int $id)
+    {
+        $user = Auth::user();
+
+        $reviews = Review::where('user_id', $user->id)
+        ->with('store')
+        ->orderBy('created_at', 'desc') 
+        ->get();
+
+        return view('layouts.mypage.post_all', compact('reviews'));
+    }
+
+    // レビュー詳細
+    public function showReviewdetail(int $id)
+    {
+        $user = Auth::user();
+
+        $review = Review::with('store')->findOrFail($id);
+        
+        return view('layouts.shop.review_detail', compact('review'));
+    }
+    
 
     
 }

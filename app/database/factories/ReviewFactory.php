@@ -19,7 +19,7 @@ class ReviewFactory extends Factory
      */
     public function definition(): array
     {
-        $imageFiles = glob(public_path('storage/images/*.{jpg,jpeg,png,webp}'),GLOB_BRACE);
+        $imageFiles = glob(storage_path('app/public/images/*.{jpg,jpeg,png,webp}'), GLOB_BRACE);
         $imagePath = fake()->randomElement($imageFiles);
         $imageName = basename($imagePath);
 
@@ -28,7 +28,7 @@ class ReviewFactory extends Factory
             'user_id' => User::where('role',1)->inRandomOrder()->first()->id,
             'store_id' => Store::inRandomOrder()->first()->id,
             'title' => fake()->text(30),
-            'image' => 'storage/images/' . $imageName,
+            'image' => 'images/' . $imageName,
             'content' => fake()->sentence(),
             'rating' => fake()->numberBetween(1, 5),
             'created_at' => now(),
