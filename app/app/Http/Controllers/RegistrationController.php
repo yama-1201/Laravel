@@ -133,6 +133,18 @@ class RegistrationController extends Controller
         return view('layouts.shop.review_detail', compact('review'));
     }
     
+    // 違反報告
+    public function showReport(int $id, Request $request)
+    {
+        $user = Auth::user();
+
+        return view('layouts.shop.report', compact('user'));
+    }
+
+    public function report()
+    {
+
+    }
 
     
 }

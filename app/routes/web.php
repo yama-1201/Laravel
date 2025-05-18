@@ -43,6 +43,11 @@ Route::group(['middleware' => 'auth'],function(){
     // レビュー詳細
     Route::get('/review_detail/{id}',[RegistrationController::class,'showReviewdetail'])->name('showReviewdetail');
 
+    // 違反報告
+    Route::get('/report/{id}',[RegistrationController::class,'showReport'])->name('showReport');
+    Route::post('/report/{id}',[RegistrationController::class,'report'])->name('report');
+
+    
 });
 // トップページ(店舗一覧)の処理
 Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');
