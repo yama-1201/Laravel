@@ -54,20 +54,36 @@ class LoginController extends Controller
         // バリデーション
         $credentials = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required']
+            'password' => ['required'],
         ]);
-   
-        //  del_flg=0の人がログインできる
+
+        // del_flg = 0 のユーザーのみログイン許可
         if (Auth::attempt(array_merge($credentials, ['del_flg' => 0]))) {
-            // セッションの鍵
             $request->session()->regenerate();
-            return redirect('/mypage');
+
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 1:
+                    return redirect('/mypage'); // 一般ユーザー
+                case 2:
+                    return redirect('/newshop'); // 店舗ユーザー
+                case 3:
+                    return redirect('/admin/dashboard'); // 管理者
+                default:
+                    Auth::logout();
+                    return redirect('/login')->withErrors([
+                        'email' => '不正なユーザー区分です。',
+                    ]);
+            }
         }
-    
+
+        // ログイン失敗時
         return back()->withErrors([
-            'email' => 'メールアドレスまたはパスワードが正しくありません。'
-        ]);
+            'email' => 'メールアドレスまたはパスワードが正しくありません。',
+        ])->withInput(); // 入力値保持
     }
+
 
     // ログイン新規登録
     public function showNewuser(Request $request)
@@ -154,4 +170,83 @@ class LoginController extends Controller
 
         return redirect('/login');
     }
+
+    // 店舗新規ユーザー登録
+    public function showNewshopuser(Request $request)
+     {
+        if ($request->session()->has('user_data')) {
+            session()->flashInput($request->session()->get('user_data'));
+        }
+    
+        return view('login.newshopuser');
+     }
+
+    public function newshopuser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email', 'unique:users,email'],
+            'name' => ['required', 'string'],
+            'password' => ['required', 'string', 'confirmed'],
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $request->session()->put('user_data', [
+            'email' => $request->email,
+            'name' => $request->name,
+            'password' => $request->password,
+        ]);
+
+         return redirect()->route('showNewshopuserconf');
+
+    }  
+    // 店舗新規ユーザー確認画面
+    public function showNewshopuserconf(Request $request)
+    {
+        // セッションから取り出す
+        $userData = $request->session()->get('user_data');
+    
+        if (!$userData) {
+            return redirect()->route('showNewshopuser');
+        }
+    
+        return view('login.newshopuser_conf', [
+            'email' => $userData['email'],
+            'name' => $userData['name'],
+        ]);
+    }  
+
+    // 店舗ユーザー完了画面
+    public function showNewshopusercomp()
+    {
+        return view('login.newshopuser_comp') ;       
+    }
+    public function newshopusercomp(Request $request)
+    {
+        $userData = $request->session()->get('user_data');
+
+        if (!$userData) 
+        {
+            return redirect()->route('showNewshopuser');
+        }
+
+        // DBに登録
+        $user = User::create([
+            'email' => $userData['email'],
+            'name' => $userData['name'],
+            'password' => Hash::make($userData['password']),
+            'role' => '2',
+        ]);
+
+
+        // セッションから削除
+        $request->session()->forget('user_data');
+
+        return redirect()->route('showNewshopusercomp');
+    }
+
+    
 }
+
+

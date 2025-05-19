@@ -33,8 +33,9 @@
                                 <label for="comment" class="form-label">違反理由</label>
                                 <textarea name="comment" id="comment" class="form-control" rows="5" placeholder="理由をご記入ください"></textarea>
                             </div>
-
-                            <button type="submit" class="btn btn-danger">違反報告する</button>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-danger ">違反報告する</button>
+                            </div>
                         </form>
                     </div>
                 </div>         

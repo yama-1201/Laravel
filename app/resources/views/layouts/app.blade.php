@@ -25,7 +25,7 @@
                 <a class="navbar-brand" href="{{ route('toppage') }}">
                     レビューサイト
                 </a>
-                <a class="nav-link" href="{{ route('showShopall') }}">店舗の一覧へ</a>
+                <a class="nav-link mx-1" href="{{ route('showShopall') }}">店舗の一覧へ</a>
                 
                     <div class ="d-flex align-items-center">
                         @if(Auth::check())

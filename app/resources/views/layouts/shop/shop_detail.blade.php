@@ -14,7 +14,11 @@
                         <div class="mt-5">
                             <div class="row row-cols-1 row-cols-md-2 g-4">
                                 <div class="col">
-                                    <img src="{{ asset('storage/' . $store->image_path) }}"  class="img-fluid" alt="店舗画像" style="height: 400px;">   
+                                    <img src="{{ asset('storage/' . $store->image_path) }}"  class="img-fluid" alt="店舗画像" style="height: 400px;">  
+                                    <div class="col card">
+                                        <h5 class="card-title">紹介内容</h5>
+                                        <p class="card-text">{{$store->description}}</p>
+                                    </div> 
                                     <p class="card-text mt-3">住所: {{ $store->address }}</p>
                                 </div>
                                 <div class="col">

@@ -30,12 +30,13 @@
             </form>
           </div>
         </nav>
-        <div class="d-flex justify-content-center mt-3">
-          <a class="mx-3" href="#">パスワードの変更はこちらから</a>
-          <a class="mx-3" href="#">店舗登録の方はこちら</a>
-        </div>
         <div class="text-center mt-3">
+          <a class="mx-3" href="#">パスワードの変更はこちらから</a>
+          
+        </div>
+        <div class="d-flex justify-content-center mt-3">
           <a href="{{ route('showNewuser') }}">新規登録の方はこちら</a>
+          <a class="mx-3" href="{{ route('showNewshopuser') }}">店舗新規ユーザー登録の方はこちら</a>
         </div>
       </div>
     </div>

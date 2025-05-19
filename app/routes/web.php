@@ -47,6 +47,17 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/report/{id}',[RegistrationController::class,'showReport'])->name('showReport');
     Route::post('/report',[RegistrationController::class,'report'])->name('report');
 
+    // 店舗登録
+    Route::get('/newshop', [RegistrationController::class, 'showNewshop'])->name('showNewshop');
+    Route::post('/newshop', [RegistrationController::class, 'newshop'])->name('newshop');
+
+    // 店舗確認画面
+    Route::get('/newshowconf', [RegistrationController::class, 'showNewconf'])->name('showNewconf');
+
+    // 店舗完了画面
+    Route::get('/newshop_comp', [RegistrationController::class, 'showNewshopcomp'])->name('showNewshopcomp');
+    Route::post('/newshop_comp', [RegistrationController::class, 'newshopcomp'])->name('newshopcomp');
+
 
 });
 // トップページ(店舗一覧)の処理
@@ -76,6 +87,16 @@ Route::post('/newuser_comp', [LoginController::class, 'newusercomp'])->name('new
 
 // ログアウト
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// 店舗ユーザー新規登録
+Route::get('/newshopuser', [LoginController::class, 'showNewshopuser'])->name('showNewshopuser');
+Route::post('/newshopuser', [LoginController::class, 'newshopuser'])->name('newshopuser');
+// 店舗ユーザー確認画面
+Route::get('/newshopuser_conf', [LoginController::class, 'showNewshopuserconf'])->name('showNewshopuserconf');
+// 店舗ユーザー完了画面
+Route::get('/newshopuser_comp', [LoginController::class, 'showNewshopusercomp'])->name('showNewshopusercomp');
+Route::post('/newshopuser_comp', [LoginController::class, 'newshopusercomp'])->name('newshopusercomp');
+
 
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

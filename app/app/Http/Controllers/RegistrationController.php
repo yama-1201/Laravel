@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Store;
 use App\Models\Report;
@@ -150,7 +151,6 @@ class RegistrationController extends Controller
             'review_id' => 'required|integer|exists:reviews,id',
             'comment' => 'nullable|string',
         ]);
-        \Log::info('validated');
 
         // 違反報告を保存
         $report = new Report();
@@ -160,12 +160,100 @@ class RegistrationController extends Controller
         $report->user_id = Auth::id();
         $report->created_at = now();
 
-        $report->save();
-        \Log::info('report created');
-        
+        $report->save();        
     
-        return view('layouts.shop.toppage');
+        return redirect()->route('showToppage');
     }
 
+    // 店舗登録
+    public function showNewshop(Request $request)
+    {
+        if ($request->session()->has('shopuser_data')) {
+            session()->flashInput($request->session()->get('shopuser_data'));
+        }
+    
+        return view('layouts.shop.shop');
+    }
+
+    public function newshop(Request $request)
+    {
+       $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'image_path' => 'nullable|image',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        if ($request->hasFile('image_path')) {
+            $path = $request->file('image_path')->store('shop_images', 'public');
+        } else {
+            $path = null;
+        }
+
+        $request->session()->put('shop_data', [
+            'name' => $request->name,
+            'address' => $request->address,
+            'description' => $request->description,
+            'image_path' => $path,
+        ]);
+
+         return redirect()->route('showNewconf');
+
+    }
+
+    // 店舗確認画面
+    public function showNewconf(Request $request)
+    {
+        // セッションから取り出す
+        $shopData = $request->session()->get('shop_data');
+    
+        if (!$shopData) {
+            return redirect()->route('showNewshop');
+        }
+    
+        return view('layouts.shop.shop_conf', [
+            'name' => $shopData['name'],
+            'address' => $shopData['address'],
+            'description' => $shopData['description'],
+            'image_path' => $shopData['image_path'] ?? null,
+        ]);
+    }
+
+    // 店舗登録完了画面
+    public function showNewshopcomp()
+    {
+        return view('layouts.shop.shop_comp') ;       
+    }
+
+    public function newshopcomp(Request $request)
+    {
+        $shopData = $request->session()->get('shop_data');
+
+        if (!$shopData) 
+        {
+            return redirect()->route('showNewshop');
+        }
+        $user = Auth::user();
+        
+
+        // DBに登録
+        $store = new Store();
+
+        $store->name = $shopData['name'];
+        $store->address = $shopData['address'];
+        $store->description = $shopData['description'];
+        $store->image_path = $shopData['image_path'] ?? null;
+        $store->user_id = $user->id;
+
+        $store->save();
+        
+        // セッションから削除
+        $request->session()->forget('shop_data');
+
+        return redirect()->route('showNewshopcomp');
+    }
     
 }
