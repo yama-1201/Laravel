@@ -16,7 +16,7 @@
                                     <img src="{{ asset('storage/' . $review->store->image_path) }}"  class="img-fluid" alt="店舗画像" style="height: 400px;"> 
                                     <p class="card-text">店名：{{ $review->store->name }}</p>  
                                     <p class="card-text mt-3">住所: {{ $review->store->address }}</p>
-                                    <a href="{{ route('showReport', ['id' => $user->id]) }}" class="btn btn-primary mx-5">違反報告する</a>
+                                    <a href="{{ route('showReport', ['id' => $review->id]) }}" class="btn btn-primary mx-5">違反報告する</a>
                                 </div>
                                 <div class="col">
                                     <h4 class="mt-5">〈投稿内容〉</h4>

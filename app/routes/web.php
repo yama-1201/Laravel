@@ -45,9 +45,9 @@ Route::group(['middleware' => 'auth'],function(){
 
     // 違反報告
     Route::get('/report/{id}',[RegistrationController::class,'showReport'])->name('showReport');
-    Route::post('/report/{id}',[RegistrationController::class,'report'])->name('report');
+    Route::post('/report',[RegistrationController::class,'report'])->name('report');
 
-    
+
 });
 // トップページ(店舗一覧)の処理
 Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');

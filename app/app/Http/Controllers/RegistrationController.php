@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Store;
+use App\Models\Report;
 use App\Models\Review;
 
 // ユーザーの新規登録処理
@@ -137,13 +138,33 @@ class RegistrationController extends Controller
     public function showReport(int $id, Request $request)
     {
         $user = Auth::user();
+        $review = Review::findOrFail($id);
 
-        return view('layouts.shop.report', compact('user'));
+        return view('layouts.shop.report', compact('user', 'review'));
     }
 
-    public function report()
+    public function report(Request $request)
     {
+        // バリデーション
+        $request->validate([
+            'review_id' => 'required|integer|exists:reviews,id',
+            'comment' => 'nullable|string',
+        ]);
+        \Log::info('validated');
 
+        // 違反報告を保存
+        $report = new Report();
+
+        $report->review_id = $request->review_id;
+        $report->comment = $request->comment;
+        $report->user_id = Auth::id();
+        $report->created_at = now();
+
+        $report->save();
+        \Log::info('report created');
+        
+    
+        return view('layouts.shop.toppage');
     }
 
     

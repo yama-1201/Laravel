@@ -31,9 +31,9 @@
                         @if(Auth::check())
                         <div class="navbar-nav d-flex flex-row align-items-center">
                             <div class="d-flex align-items-center">
-                                <a href="{{ route('showMypage') }}" class="me-2">{{ Auth::user()->name }}</a>
+                                <a href="{{ route('showMypage') }}" class="nav-link">{{ Auth::user()->name }}</a>
                                 <span class="mx-1">/</span>
-                                <a class="ms-2" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     ログアウト
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

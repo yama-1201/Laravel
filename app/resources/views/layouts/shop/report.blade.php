@@ -5,18 +5,37 @@
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-12 col-md-8 mx-auto">
-                        <div class="card d-flex justify-content-between">
-                            <p class="card-text">ユーザー名 {{ $review->user->name }}点</p>
-                            <p class="card-text">タイトル：{{ $review->title }}</p>
-                            <p class="card-text">投稿内容{{ $review->content }}</p>    
+                        <div class="text-center">
+                            <p>この投稿を違反報告しますか</p>
                         </div>
-                        <div class="border-bottom border-secondary mt-3"></div>
-                        <div class="mt-5">
-                            <div class="row row-cols-1 row-cols-md-2 g-4">
-                            <a href="{{ route('showReport', ['id' => $user->id]) }}" class="btn btn-primary mx-5">違反報告する</a>
-            
+                        <div class="card">
+                            <div class="card d-flex justify-content-between align-items-center">
+                                <div class="mt-3">
+                                    <p class="card-text">ユーザー名：{{ $review->user->name }}さん</p>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="card-text">タイトル：{{ $review->title }}</p>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="card-text mb-3">投稿内容：{{ $review->content }}</p>
+                                </div>
+                            </div> 
+                        </div>
+                    
+                        
+                        <div class="border-bottom border-secondary my-3"></div>
+
+                        <form action="{{ route('report') }}"  method="POST">
+                            @csrf
+                            <input type="hidden" name="review_id" value="{{ $review->id }}">
+
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">違反理由</label>
+                                <textarea name="comment" id="comment" class="form-control" rows="5" placeholder="理由をご記入ください"></textarea>
                             </div>
-                        </div>
+
+                            <button type="submit" class="btn btn-danger">違反報告する</button>
+                        </form>
                     </div>
                 </div>         
             </div>
