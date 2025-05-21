@@ -21,27 +21,48 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container d-flex justify-content-between align-items-center">
-                <a class="navbar-brand" href="{{ route('toppage') }}">
-                    レビューサイト
-                </a>
-                <a class="nav-link mx-1" href="{{ route('showShopall') }}">店舗の一覧へ</a>
-                
-                    <div class ="d-flex align-items-center">
-                        @if(Auth::check())
-                        <div class="navbar-nav d-flex flex-row align-items-center">
-                            <div class="d-flex align-items-center">
-                                <a href="{{ route('showMypage') }}" class="nav-link">{{ Auth::user()->name }}</a>
+            @if(Auth::check() && Auth::user()->role === 1 && Auth::user()->stop === 0)
+
+                <div class="container d-flex justify-content-between align-items-center">
+                    <a class="navbar-brand" href="{{ route('toppage') }}">
+                        レビューサイト
+                    </a>
+                    <a class="nav-link mx-1" href="{{ route('showShopall') }}">店舗の一覧へ</a>
+                        <div class ="d-flex align-items-center">
+                            <div class="navbar-nav d-flex flex-row align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ route('showMypage') }}" class="nav-link">{{ Auth::user()->name }}</a>
+                                    <span class="mx-1">/</span>
+                                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        ログアウト
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf 
+                                    </form>   
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                @elseif(Auth::check() && Auth::user()->role === 3)
+                    <div class="container d-flex justify-content-between align-items-center">
+                        <p class="mt-2">レビューサイト</p>                        
+                            <div class="navbar-nav d-flex flex-row align-items-center">
+                                <a href="{{ route('showOwner') }}" class="nav-link">管理者画面</a>
                                 <span class="mx-1">/</span>
-                                <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <a class="nav-link" href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     ログアウト
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf 
-                                </form>   
+                                    @csrf
+                                </form>
                             </div>
-                        </div>
-                        @else
+                    </div>
+                 @else
+                 <div class="container d-flex justify-content-between align-items-center">
+                    <a class="navbar-brand" href="{{ route('toppage') }}">
+                        レビューサイト
+                    </a>
                             <div class="navbar-nav d-flex flex-row">
                                 <div class="nav-item">
                                     <a class="nav-link" href="{{ route('showLogin') }}">ログイン</a>

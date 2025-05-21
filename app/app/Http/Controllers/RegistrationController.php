@@ -256,4 +256,5 @@ class RegistrationController extends Controller
         return redirect()->route('showNewshopcomp');
     }
     
+
 }

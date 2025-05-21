@@ -8,6 +8,7 @@ use App\Models\Store;
 use App\Models\Review;
 use App\Models\Report;
 use App\Models\Bookmark;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 // データや画面の表示
@@ -95,6 +96,14 @@ class DisplayController extends Controller
     {
 
     }
+
+    // 利用停止画面
+    public function showStop()
+    {
+        return view('layouts.user.stop');
+    }
+
+    
 
     
 }

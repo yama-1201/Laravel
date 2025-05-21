@@ -25,18 +25,30 @@
                         
                         <div class="border-bottom border-secondary my-3"></div>
 
-                        <form action="{{ route('report') }}"  method="POST">
-                            @csrf
-                            <input type="hidden" name="review_id" value="{{ $review->id }}">
-
-                            <div class="mb-3">
-                                <label for="comment" class="form-label">違反理由</label>
-                                <textarea name="comment" id="comment" class="form-control" rows="5" placeholder="理由をご記入ください"></textarea>
-                            </div>
+                        @if(!Auth::check())
                             <div class="text-center">
-                                <button type="submit" class="btn btn-danger ">違反報告する</button>
+                                <p class="text-danger">違反報告するにはログインが必要です。</p>
+                                <a href="{{ route('showLogin') }}" class="btn btn-primary">ログイン画面へ</a>
                             </div>
-                        </form>
+
+                        @elseif(Auth::user()->stop === 1)
+                            <div class="text-center">
+                                <p class="text-danger">あなたのアカウントは現在利用停止中のため、違反報告は行えません。</p>
+                            </div>
+                        @else
+                            <form action="{{ route('report') }}"  method="POST">
+                                @csrf
+                                <input type="hidden" name="review_id" value="{{ $review->id }}">
+
+                                <div class="mb-3">
+                                    <label for="comment" class="form-label">違反理由</label>
+                                    <textarea name="comment" id="comment" class="form-control" rows="5" placeholder="理由をご記入ください"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-danger ">違反報告する</button>
+                                </div>
+                            </form>
+                        @endif
                     </div>
                 </div>         
             </div>

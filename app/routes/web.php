@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisplayController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,17 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/newshop_comp', [RegistrationController::class, 'showNewshopcomp'])->name('showNewshopcomp');
     Route::post('/newshop_comp', [RegistrationController::class, 'newshopcomp'])->name('newshopcomp');
 
+    // 管理者画面
+    Route::get('/owner', [OwnerController::class, 'showOwner'])->name('showOwner');
 
+    // 管理者ユーザー詳細
+    Route::get('/owner/userdetail/{id}', [OwnerController::class, 'showOwner_userdetail'])->name('showOwner_userdetail');
+    Route::post('/owner/userdetail/{id}', [OwnerController::class, 'owner_userdetail'])->name('owner_userdetail');
+
+    // 利用停止画面
+    Route::get('/stop', [DisplayController::class, 'showStop'])->name('showStop');
+
+    
 });
 // トップページ(店舗一覧)の処理
 Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');
@@ -97,6 +108,9 @@ Route::get('/newshopuser_conf', [LoginController::class, 'showNewshopuserconf'])
 Route::get('/newshopuser_comp', [LoginController::class, 'showNewshopusercomp'])->name('showNewshopusercomp');
 Route::post('/newshopuser_comp', [LoginController::class, 'newshopusercomp'])->name('newshopusercomp');
 
-
+// 利用停止のミドルウェア
+Route::middleware(['auth', 'check.stop'])->group(function () {
+    Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
+});
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

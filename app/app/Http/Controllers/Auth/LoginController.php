@@ -62,6 +62,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
+            
 
             switch ($user->role) {
                 case 1:
@@ -69,7 +70,7 @@ class LoginController extends Controller
                 case 2:
                     return redirect('/newshop'); // 店舗ユーザー
                 case 3:
-                    return redirect('/admin/dashboard'); // 管理者
+                    return redirect('/owner'); // 管理者
                 default:
                     Auth::logout();
                     return redirect('/login')->withErrors([

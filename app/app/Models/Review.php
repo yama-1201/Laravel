@@ -19,7 +19,7 @@ class Review extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function report()
+    public function reports()
     {
         return $this->hasMany('App\Models\Report');
     }

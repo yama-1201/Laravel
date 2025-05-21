@@ -6,15 +6,15 @@
                 <div class="row">
                     <div class="col-12 col-md-8 mx-auto">
                         <div class="d-flex justify-content-between">
-                                        <h1 class="card-title">{{ $store->name }}</h1>
-                                        <button class="btn btn-primary">ブックマークする</button>
-                                        <a href="{{ route('showPost',['id' => $store->id]) }}" class="btn btn-primary">レビューを投稿する</a>
-                                        <h5 class="card-text">点: {{ number_format($store->reviews_avg_rating, 1) }}点</h5>
+                            <h3 class="card-title">{{ $store->name }}</h3>
+                            <button class="btn btn-primary">ブックマークする</button>
+                            <a href="{{ route('showPost',['id' => $store->id]) }}" class="btn btn-primary">レビューを投稿する</a>
+                            <h5 class="card-text">点: {{ number_format($store->reviews_avg_rating, 1) }}点</h5>
                         </div>
                         <div class="mt-5">
                             <div class="row row-cols-1 row-cols-md-2 g-4">
                                 <div class="col">
-                                    <img src="{{ asset('storage/' . $store->image_path) }}"  class="img-fluid" alt="店舗画像" style="height: 400px;">  
+                                    <img src="{{ asset('storage/' . $store->image_path) }}"  class="img-fluid" alt="店舗画像" style="height: 200px;">  
                                     <div class="col card">
                                         <h5 class="card-title">紹介内容</h5>
                                         <p class="card-text">{{$store->description}}</p>
