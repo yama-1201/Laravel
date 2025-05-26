@@ -29,6 +29,7 @@ class OwnerController extends Controller
         ->get();
 
         $reviews = Review::withCount('reports')
+        ->where('is_hedden', 0)
         ->having('reports_count', '>', 0)
         ->orderBy('reports_count', 'desc')
         ->take(20)
@@ -38,6 +39,7 @@ class OwnerController extends Controller
     
     }
 
+    // ユーザー詳細
     public function showOwner_userdetail(int $id)
     {
          $user = User::withCount(['reviews as deleted_reviews_count' => function ($query) {
@@ -54,5 +56,26 @@ class OwnerController extends Controller
         $user->save();
 
          return redirect()->route('showOwner', ['id' => $id]);
+    }
+
+    // 投稿詳細
+    public function showOwner_postdetail(int $id)
+    {
+        $review = Review::with('user') 
+                    ->withCount('reports') 
+                    ->find($id);
+
+        
+
+        return view('layouts.owner.post_detail', compact('review'));
+    }
+
+    public function owner_postdetail(int $id)
+    {
+        $review = Review::findOrFail($id);
+        $review->is_hedden = 1;
+        $review->save();
+
+         return redirect()->route('showOwner');
     }
 }

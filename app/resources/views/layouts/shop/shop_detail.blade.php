@@ -7,8 +7,29 @@
                     <div class="col-12 col-md-8 mx-auto">
                         <div class="d-flex justify-content-between">
                             <h3 class="card-title">{{ $store->name }}</h3>
-                            <button class="btn btn-primary">ブックマークする</button>
-                            <a href="{{ route('showPost',['id' => $store->id]) }}" class="btn btn-primary">レビューを投稿する</a>
+                            @auth
+                                @if (Auth::user()->stop == 0 && Auth::user()->role != 3)
+                                    {{-- ブックマーク済みかどうかを判定 --}}
+                                    @if (Auth::user()->bookmarks->contains($store->id))
+                                        <form action="{{ route('bookmarkdestroy', $store->id) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">ブックマーク解除</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('bookmarkstore', $store->id) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">ブックマークする</button>
+                                        </form>
+                                    @endif
+
+                                    {{-- レビュー投稿ボタン --}}
+                                    <a href="{{ route('showPost', ['id' => $store->id]) }}" class="btn btn-primary">レビューを投稿する</a>
+                                @endif
+                            @else
+                                <p>※ログインするとブックマークやレビュー投稿ができます。</p>
+                            @endauth
+
                             <h5 class="card-text">点: {{ number_format($store->reviews_avg_rating, 1) }}点</h5>
                         </div>
                         <div class="mt-5">

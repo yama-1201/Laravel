@@ -30,4 +30,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Report');
     }
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Store::class, 'bookmarks', 'user_id', 'store_id')->withTimestamps();
+    }
 }

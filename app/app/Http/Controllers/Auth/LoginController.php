@@ -62,6 +62,12 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
+
+            if ($user->stop == 1) 
+            {
+                Auth::logout();
+                return redirect()->route('showStop'); // 利用停止画面へのルート（後述）
+            }
             
 
             switch ($user->role) {

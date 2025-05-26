@@ -20,7 +20,8 @@ class DisplayController extends Controller
         // 検索
         $keyword = $request->input('keyword');
         $rating = $request->input('rating');
-        $query = Review::with('store');
+        $query = Review::with('store')
+            ->where('is_hedden', 0);
 
         // キーワード検索
         if (!empty($keyword)) {
@@ -64,10 +65,13 @@ class DisplayController extends Controller
     // 店舗詳細画面
     public function showShopdetail($id)
     {
-        $store = Store::with(['reviews.user'])->findOrFail($id);
-        $store = Store::withAvg('reviews', 'rating')->findOrFail($id);
+        $store = Store::with(['reviews.user'])->withAvg('reviews', 'rating')->findOrFail($id);
 
-        return view('layouts.shop.shop_detail',compact('store'));
+        $bookmarkedstores = null;
+        if (Auth::check()) {
+            $bookmarkedstores = Auth::user()->bookmarks()->pluck('store_id');
+        }
+        return view('layouts.shop.shop_detail',compact('store','bookmarkedstores'));
     }
 
     public function shopdetail()

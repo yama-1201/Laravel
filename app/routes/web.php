@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DisplayController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,8 +42,8 @@ Route::group(['middleware' => 'auth'],function(){
     // 自分のレビュー投稿一覧
     Route::get('/post_all/{id}',[RegistrationController::class,'showPostall'])->name('showPostall');
 
-    // レビュー詳細
-    Route::get('/review_detail/{id}',[RegistrationController::class,'showReviewdetail'])->name('showReviewdetail');
+   
+    
 
     // 違反報告
     Route::get('/report/{id}',[RegistrationController::class,'showReport'])->name('showReport');
@@ -63,11 +64,16 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/owner', [OwnerController::class, 'showOwner'])->name('showOwner');
 
     // 管理者ユーザー詳細
-    Route::get('/owner/userdetail/{id}', [OwnerController::class, 'showOwner_userdetail'])->name('showOwner_userdetail');
-    Route::post('/owner/userdetail/{id}', [OwnerController::class, 'owner_userdetail'])->name('owner_userdetail');
+    Route::get('/userdetail/{id}', [OwnerController::class, 'showOwner_userdetail'])->name('showOwner_userdetail');
+    Route::post('/userdetail/{id}', [OwnerController::class, 'owner_userdetail'])->name('owner_userdetail');
 
-    // 利用停止画面
-    Route::get('/stop', [DisplayController::class, 'showStop'])->name('showStop');
+    // ブックマーク機能
+    Route::post('/bookmark/{id}', [BookmarkController::class, 'bookmarkstore'])->name('bookmarkstore');
+    Route::delete('/bookmark/{id}', [BookmarkController::class, 'bookmarkdestroy'])->name('bookmarkdestroy');
+
+    // 管理者投稿詳細
+    Route::get('/postdetail/{id}', [OwnerController::class, 'showOwner_postdetail'])->name('showOwner_postdetail');
+    Route::post('/postdetail/{id}', [OwnerController::class, 'owner_postdetail'])->name('owner_postdetail');
 
     
 });
@@ -99,6 +105,10 @@ Route::post('/newuser_comp', [LoginController::class, 'newusercomp'])->name('new
 // ログアウト
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// 利用停止画面
+    Route::get('/stop', [DisplayController::class, 'showStop'])->name('showStop');
+
+
 // 店舗ユーザー新規登録
 Route::get('/newshopuser', [LoginController::class, 'showNewshopuser'])->name('showNewshopuser');
 Route::post('/newshopuser', [LoginController::class, 'newshopuser'])->name('newshopuser');
@@ -107,10 +117,10 @@ Route::get('/newshopuser_conf', [LoginController::class, 'showNewshopuserconf'])
 // 店舗ユーザー完了画面
 Route::get('/newshopuser_comp', [LoginController::class, 'showNewshopusercomp'])->name('showNewshopusercomp');
 Route::post('/newshopuser_comp', [LoginController::class, 'newshopusercomp'])->name('newshopusercomp');
-
+ // レビュー詳細
+Route::get('/review_detail/{id}',[RegistrationController::class,'showReviewdetail'])->name('showReviewdetail');
 // 利用停止のミドルウェア
-Route::middleware(['auth', 'check.stop'])->group(function () {
-    Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
-});
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::middleware(['auth', 'check.stop'])->group(function () {
+//     Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
+// });
+ // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

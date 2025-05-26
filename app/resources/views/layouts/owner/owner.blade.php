@@ -34,7 +34,7 @@
                                         <h5 class="card-title text-center">違反報告が多い投稿</h5>
                                         <div class="card-group text-center">
                                             @foreach($reviews as $review)
-                                                <a>
+                                                <a href="{{ route('showOwner_postdetail', ['id' => $review->id]) }}" class="d-block my-1">
                                                     {{ $review->title }}（違反報告数：{{ $review->reports_count }}）
                                                 </a>
                                             @endforeach
