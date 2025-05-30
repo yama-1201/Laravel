@@ -10,17 +10,14 @@
                             @auth
                                 @if (Auth::user()->stop == 0 && Auth::user()->role != 3)
                                     {{-- ブックマーク済みかどうかを判定 --}}
-                                    @if (Auth::user()->bookmarks->contains($store->id))
-                                        <form action="{{ route('bookmarkdestroy', $store->id) }}" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">ブックマーク解除</button>
-                                        </form>
-                                    @else
-                                        <form action="{{ route('bookmarkstore', $store->id) }}" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary">ブックマークする</button>
-                                        </form>
+                                     @if (Auth::user()->stop == 0 && Auth::user()->role != 3)
+                                        <button type="button" 
+                                                id="bookmark-button" 
+                                                data-id="{{ $store->id }}" 
+                                                data-bookmarked="{{ Auth::user()->bookmarks->contains($store->id) ? '1' : '0' }}"
+                                                class="btn {{ Auth::user()->bookmarks->contains($store->id) ? 'btn-danger' : 'btn-primary' }}">
+                                            {{ Auth::user()->bookmarks->contains($store->id) ? 'ブックマーク解除' : 'ブックマークする' }}
+                                        </button>
                                     @endif
 
                                     {{-- レビュー投稿ボタン --}}
@@ -62,5 +59,46 @@
                 </div>
             </div>
         </main>
+
+        <script>
+            document.querySelector('#bookmark-button').addEventListener('click', function () {
+                const button = this;
+                const storeId = button.dataset.id;
+                const bookmarked = button.dataset.bookmarked === '1'; 
+
+                // HTTPメソッドとURLを決定
+                const method = bookmarked ? 'DELETE' : 'POST';
+                const url = bookmarked ? `/bookmark/destroy/${storeId}` : `/bookmark/store/${storeId}`;
+
+                fetch(url, {
+                    method: method,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({}),
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    // ボタンの見た目と状態を切り替え
+                    if (bookmarked) {
+                        button.dataset.bookmarked = '0';
+                        button.textContent = 'ブックマークする';
+                        button.classList.remove('btn-danger');
+                        button.classList.add('btn-primary');
+                    } else {
+                        button.dataset.bookmarked = '1';
+                        button.textContent = 'ブックマーク解除';
+                        button.classList.remove('btn-primary');
+                        button.classList.add('btn-danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                });
+            });
+        </script>
 
 @endsection

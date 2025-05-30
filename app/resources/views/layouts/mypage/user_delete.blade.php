@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       <div class="col col-md-offset-3 col-md-6">
         <nav class="card mt-5">
-          <div class="card-header">退会</div>
+          <div class="card-header text-center">退会</div>
           <div class="card-body">
             <form action="{{ route('userdelete', ['id' => $user->id]) }}" method="POST">
               @csrf

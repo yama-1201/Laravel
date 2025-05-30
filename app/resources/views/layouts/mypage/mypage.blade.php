@@ -47,6 +47,34 @@
                         <div class="d-flex justify-content-center mt-3">
                             <a href="{{ route('showPostall', ['id' => $user->id]) }}" class="btn btn-primary mx-5">投稿をすべて見る</a>
                         </div>
+
+                        <div class="border-bottom border-secondary mt-5"></div>
+
+                        <!-- ブックマーク一覧 -->
+                        <h2 class="text-center mb-4 mt-5">ブックマーク一覧</h2>
+                        <div class="container my-5">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                @forelse ($bookmarks as $bookmark)
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="{{ asset('storage/' . $bookmark->image_path) }}" class="card-img-top img-fluid" alt="店舗画像">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $bookmark->name }}</h5>
+                                                <p class="card-text">点: {{ number_format($bookmark->reviews_avg_rating, 1) }}点</p>
+                                                <p class="card-text">住所: {{ $bookmark->address }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <p class="text-center mb-0">まだブックマークしていません。</p>
+                                </div>
+                                @endforelse
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a href="{{ route('showBookmark', ['id' => $user->id]) }}" class="btn btn-primary mx-5">ブックマークをすべて見る</a>
+                        </div>
                     </div>
                 </div>
             </div>

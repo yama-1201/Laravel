@@ -33,6 +33,6 @@ class User extends Authenticatable
 
     public function bookmarks()
     {
-        return $this->belongsToMany(Store::class, 'bookmarks', 'user_id', 'store_id')->withTimestamps();
+        return $this->belongsToMany(Store::class, 'bookmarks', 'user_id', 'store_id');
     }
 }

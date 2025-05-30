@@ -13,11 +13,13 @@ class BookmarkController extends Controller
         $user=Auth::user();
         $store=Store::findOrFail($id);
 
-        if(!$user->bookmarks()->where('store_id',$id)->exists())
+        if (!$user->bookmarks()->where('store_id', $id)->exists())
         {
-            $user->bookmarks()->attach($store);
+        $user->bookmarks()->attach($store->id, [
+            'created_at' => now()
+        ]);
         }
-         return back()->with('message', 'ブックマークしました');
+        return response()->json(['message' => 'ブックマークしました']);
     }
 
     public function bookmarkdestroy($id)
@@ -25,6 +27,21 @@ class BookmarkController extends Controller
         $user = Auth::user();
         $user->bookmarks()->detach($id);
 
-         return back()->with('message', 'ブックマークを解除しました');
+        return response()->json(['message' => 'ブックマークを解除しました']);
+    }
+
+    public function showBookmark($id)
+    {
+        $user = Auth::user();
+
+        if (!$user || $user->del_flg === 1)
+        {
+            Auth::logout();
+            return redirect('/login');
+        }
+
+        $bookmarks = $user->bookmarks()->withAvg('reviews', 'rating')->get();
+
+        return view('layouts.mypage.bookmark', compact('bookmarks'));
     }
 }

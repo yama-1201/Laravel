@@ -87,13 +87,14 @@ class DisplayController extends Controller
 
         $reviews = $user->reviews()->latest()->take(3)->get();
 
+        $bookmarks = $user->bookmarks()->withAvg('reviews', 'rating')->take(3)->get();
         // 退会済みのアカウント
         if ($user->del_flg === 1) {
             Auth::logout();
             return redirect('/login');
         }
 
-        return view('layouts.mypage.mypage',compact('user', 'reviews'));
+        return view('layouts.mypage.mypage',compact('user', 'reviews', 'bookmarks'));
     }
 
     public function mypage()

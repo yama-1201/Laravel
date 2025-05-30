@@ -3,6 +3,9 @@
         <main class="py-4">
             <!-- 投稿内容 -->
             <div class="container my-5">
+                <div class="text-center mb-5">
+                    <h5><投稿内容></h5>
+                </div>
                 <div class="row">
                     <div class="col-12 col-md-8 mx-auto">
                         <form action="{{ route('post', ['id' => $store->id]) }}" method="POST" enctype="multipart/form-data"> 

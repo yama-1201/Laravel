@@ -256,5 +256,17 @@ class RegistrationController extends Controller
         return redirect()->route('showNewshopcomp');
     }
     
+    // パスワード再設定
+    public function showReset()
+    {
+        return view('user.psw_reset');
+    }
+
+    public function reset()
+    {
+       
+    }
+
+    
 
 }

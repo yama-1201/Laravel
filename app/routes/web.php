@@ -42,9 +42,6 @@ Route::group(['middleware' => 'auth'],function(){
     // 自分のレビュー投稿一覧
     Route::get('/post_all/{id}',[RegistrationController::class,'showPostall'])->name('showPostall');
 
-   
-    
-
     // 違反報告
     Route::get('/report/{id}',[RegistrationController::class,'showReport'])->name('showReport');
     Route::post('/report',[RegistrationController::class,'report'])->name('report');
@@ -68,13 +65,15 @@ Route::group(['middleware' => 'auth'],function(){
     Route::post('/userdetail/{id}', [OwnerController::class, 'owner_userdetail'])->name('owner_userdetail');
 
     // ブックマーク機能
-    Route::post('/bookmark/{id}', [BookmarkController::class, 'bookmarkstore'])->name('bookmarkstore');
-    Route::delete('/bookmark/{id}', [BookmarkController::class, 'bookmarkdestroy'])->name('bookmarkdestroy');
+    Route::post('/bookmark/store/{id}', [BookmarkController::class, 'bookmarkstore'])->name('bookmarkstore');
+    Route::delete('/bookmark/destroy/{id}', [BookmarkController::class, 'bookmarkdestroy'])->name('bookmarkdestroy');
 
     // 管理者投稿詳細
     Route::get('/postdetail/{id}', [OwnerController::class, 'showOwner_postdetail'])->name('showOwner_postdetail');
     Route::post('/postdetail/{id}', [OwnerController::class, 'owner_postdetail'])->name('owner_postdetail');
 
+    // ブックマーク一覧
+    Route::get('/bookmarks/{id}', [BookmarkController::class, 'showBookmark'])->name('showBookmark');
     
 });
 // トップページ(店舗一覧)の処理
@@ -119,8 +118,12 @@ Route::get('/newshopuser_comp', [LoginController::class, 'showNewshopusercomp'])
 Route::post('/newshopuser_comp', [LoginController::class, 'newshopusercomp'])->name('newshopusercomp');
  // レビュー詳細
 Route::get('/review_detail/{id}',[RegistrationController::class,'showReviewdetail'])->name('showReviewdetail');
-// 利用停止のミドルウェア
-// Route::middleware(['auth', 'check.stop'])->group(function () {
-//     Route::get('/mypage',[DisplayController::class,'showMypage'])->name('showMypage');
-// });
- // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// メールアドレス入力画面
+Route::get('/mail', [RegistrationController::class,'showReset'])->name('showReset');
+// メール送信処理
+Route::post('/send',[RegistrationController::class,'reset'])->name('reset');
+// 新パスワード入力画面
+Route::get('/password/reset/{token}', [RegistrationController::class,'showResetcomp'])->name('showResetcomp');
+// 新パスワード保存処理
+Route::post('/password/reset', [RegistrationController::class,'passwordedit'])->name('passwordedit');

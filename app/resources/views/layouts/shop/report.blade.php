@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-12 col-md-8 mx-auto">
                         <div class="text-center">
-                            <p>この投稿を違反報告しますか</p>
+                            <h5>この投稿を違反報告しますか</h5>
                         </div>
                         <div class="card">
                             <div class="card d-flex justify-content-between align-items-center">

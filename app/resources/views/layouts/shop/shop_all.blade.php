@@ -4,7 +4,7 @@
             <!-- 投稿 -->
             <div class="container my-5">
                 <div class="text-center mb-5">
-                    <h5>店舗一覧</h5>
+                    <h5><店舗一覧></h5>
                 </div>
                 <div class="row"> 
                     <div class="col-12 col-md-8 mx-auto">
