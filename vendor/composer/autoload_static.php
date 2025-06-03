@@ -65,6 +65,7 @@ class ComposerStaticInit65fdaf02cf2a4dc9241e927f36d36b8e
         array (
             'Laravel\\Ui\\' => 11,
             'Laravel\\Prompts\\' => 16,
+            'Laravel\\Breeze\\' => 15,
         ),
         'I' => 
         array (
@@ -193,6 +194,10 @@ class ComposerStaticInit65fdaf02cf2a4dc9241e927f36d36b8e
         'Laravel\\Prompts\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/prompts/src',
+        ),
+        'Laravel\\Breeze\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/breeze/src',
         ),
         'Illuminate\\View\\' => 
         array (

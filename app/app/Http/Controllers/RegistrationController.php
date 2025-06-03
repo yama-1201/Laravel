@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Password;
 use App\Models\User;
 use App\Models\Store;
 use App\Models\Report;
@@ -257,14 +258,68 @@ class RegistrationController extends Controller
     }
     
     // パスワード再設定
+    // メールアドレスの入力
     public function showReset()
     {
-        return view('user.psw_reset');
+        return view('layouts.user.psw_reset');
     }
 
-    public function reset()
+    // メールの送信
+    public function reset(Request $request)
     {
-       
+       $token = Str::random(60);
+
+       DB::table('password_resets')->updateOrInsert
+       (
+            ['email' => $request->email],
+            [
+                'token' => $token,
+                'created_at' => now(),
+            ]
+        );
+
+        Mail::send('layouts.user.psw_reset', ['token' => $token], function ($message) use ($request) {
+        $message->to($request->email);
+        $message->subject('【〇〇アプリ】パスワード再設定リンク');
+        });
+
+        return back()->with('status', 'メールを送信しました。');
+    }
+
+    // 新パスワード入力
+    public function showResetcomp($token)
+    {
+        return view('auth.passwords.reset', ['token' => $token]);
+    }
+
+    // 新パスワード保存
+    public function passwordedit(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|confirmed|min:8',
+            'token' => 'required'
+        ]);
+
+        // トークンとメールが一致するか確認
+        $record = DB::table('password_resets')
+            ->where('email', $request->email)
+            ->where('token', $request->token)
+            ->first();
+
+        if (!$record) {
+            return back()->withErrors(['email' => '無効なトークンです。']);
+        }
+
+        // パスワード更新
+        User::where('email', $request->email)->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        // トークン削除
+        DB::table('password_resets')->where('email', $request->email)->delete();
+
+        return redirect()->route('login')->with('status', 'パスワードを更新しました！');
     }
 
     

@@ -6,6 +6,8 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -105,7 +107,7 @@ Route::post('/newuser_comp', [LoginController::class, 'newusercomp'])->name('new
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // 利用停止画面
-    Route::get('/stop', [DisplayController::class, 'showStop'])->name('showStop');
+Route::get('/stop', [DisplayController::class, 'showStop'])->name('showStop');
 
 
 // 店舗ユーザー新規登録
@@ -119,11 +121,9 @@ Route::post('/newshopuser_comp', [LoginController::class, 'newshopusercomp'])->n
  // レビュー詳細
 Route::get('/review_detail/{id}',[RegistrationController::class,'showReviewdetail'])->name('showReviewdetail');
 
-// メールアドレス入力画面
-Route::get('/mail', [RegistrationController::class,'showReset'])->name('showReset');
-// メール送信処理
-Route::post('/send',[RegistrationController::class,'reset'])->name('reset');
-// 新パスワード入力画面
-Route::get('/password/reset/{token}', [RegistrationController::class,'showResetcomp'])->name('showResetcomp');
-// 新パスワード保存処理
-Route::post('/password/reset', [RegistrationController::class,'passwordedit'])->name('passwordedit');
+// パスワード再設定
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');

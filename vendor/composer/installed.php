@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'e80dbf4f718bee040ed98f0f9bbe21d48f674013',
+        'reference' => '7f9480d6d0b63e67c9adb5658c373476086ae66d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'e80dbf4f718bee040ed98f0f9bbe21d48f674013',
+            'reference' => '7f9480d6d0b63e67c9adb5658c373476086ae66d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -189,6 +189,15 @@
             'install_path' => __DIR__ . '/../illuminate/view',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'laravel/breeze' => array(
+            'pretty_version' => 'v2.3.6',
+            'version' => '2.3.6.0',
+            'reference' => '390cbc433cb72fa6050965000b2d56c9ba6fd713',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/breeze',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'laravel/prompts' => array(
             'pretty_version' => 'v0.3.5',

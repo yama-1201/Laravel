@@ -31,7 +31,7 @@
           </div>
         </nav>
         <div class="text-center mt-3">
-          <a class="mx-3" href="#">パスワードの変更はこちらから</a>
+          <a class="mx-3" href="{{ route('password.request') }}">パスワードを忘れ方はこちらから</a>
           
         </div>
         <div class="d-flex justify-content-center mt-3">
