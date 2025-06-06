@@ -16,7 +16,7 @@
                                         <option value="{{ $i }}" {{ old('rating', $rating) == $i ? 'selected' : '' }}>{{ $i }}点</option>
                                     @endfor
                                 </select>
-                                <button type="submit" class="btn btn-primary">検索</button>
+                                <button type="submit" class="btn btn-primary" style="white-space: nowrap;">検索</button>
                             </form>
                         </div>
                         <!-- 検索ここまで -->
