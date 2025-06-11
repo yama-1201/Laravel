@@ -77,6 +77,16 @@ Route::group(['middleware' => 'auth'],function(){
     // ブックマーク一覧
     Route::get('/bookmarks/{id}', [BookmarkController::class, 'showBookmark'])->name('showBookmark');
     
+    // 店舗登録一覧
+    Route::get('/store_all/{id}', [RegistrationController::class, 'showStorepostall'])->name('showStorepostall');
+ 
+    // 登録店舗の編集
+    Route::get('/edit_store/{id}',[RegistrationController::class,'showEditstore'])->name('showEditstore');
+    Route::post('/edit_store/{id}',[RegistrationController::class,'editstore'])->name('editstore');
+
+    // 登録店舗の削除
+    Route::delete('/store_delete/{id}', [RegistrationController::class, 'destroy'])->name('deletestore');
+
 });
 // トップページ(店舗一覧)の処理
 Route::get('/',[DisplayController::class,'showToppage'])->name('showToppage');

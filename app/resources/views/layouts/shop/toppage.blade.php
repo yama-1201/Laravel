@@ -10,10 +10,17 @@
                         <div class="d-flex justify-content-center">
                             <form action="{{ route('toppage') }}" method="GET" class="mb-4 d-flex">
                                 <input type="text" name="keyword" value="{{ old('keyword', $keyword) }}" class="form-control me-2" placeholder="キーワードを入力（タイトル・内容・地域）">
-                                <select name="rating" class="form-select me-2" style="width: 200px;">
-                                    <option value="">点数を選択</option>
+                                <select name="rating_min" class="form-select me-2" style="width: 150px;">
+                                    <option value="">最低点数</option>
                                     @for ($i = 1; $i <= 5; $i++)
-                                        <option value="{{ $i }}" {{ old('rating', $rating) == $i ? 'selected' : '' }}>{{ $i }}点</option>
+                                        <option value="{{ $i }}" {{ old('rating_min', $rating_min) == $i ? 'selected' : '' }}>{{ $i }}点以上</option>
+                                    @endfor
+                                </select>
+
+                                <select name="rating_max" class="form-select me-2" style="width: 150px;">
+                                    <option value="">最高点数</option>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <option value="{{ $i }}" {{ old('rating_max', $rating_max) == $i ? 'selected' : '' }}>{{ $i }}点以下</option>
                                     @endfor
                                 </select>
                                 <button type="submit" class="btn btn-primary" style="white-space: nowrap;">検索</button>

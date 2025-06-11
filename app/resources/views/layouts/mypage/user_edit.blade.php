@@ -25,14 +25,6 @@
                 <input type="text" class="form-control" id="name" name="name" value="{{ $user['name'] }}" />
               </div>
               <div class="form-group">
-                <label for="password">パスワード</label>
-                <input type="password" class="form-control" id="password" name="password"/>
-              </div>
-              <div class="form-group">
-                <label for="password_confirmation">パスワード確認</label>
-                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-            </div>
-              <div class="form-group">
                 <label for="profile">プロフィール</label>
                 <textarea class="form-control" id="profile" name="profile" rows="4">{{ $user['profile'] }}</textarea>
               </div>

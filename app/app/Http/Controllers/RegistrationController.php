@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
@@ -31,16 +32,11 @@ class RegistrationController extends Controller
         $request->validate([
             'email' => 'required|email',
             'name' => 'required|string',
-            'password' => 'nullable|string|confirmed',
         ]);
 
         $user->email = $request->email;
         $user->name = $request->name;
         $user->profile = $request->profile;
-
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
 
         $user->save();
 
@@ -321,6 +317,77 @@ class RegistrationController extends Controller
 
         return redirect()->route('login')->with('status', 'パスワードを更新しました！');
     }
+
+    // 登録店舗一覧
+    public function showStorepostall(int $id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->role !== 2) {
+            abort(403, '許可されていないアクセスです。');
+        }
+
+        $stores = $user->stores()->latest()->get();
+
+        return view('layouts.mypage.shopuser_store', compact('user', 'stores'));
+    }
+
+    // 登録店舗編集・削除
+    public function showEditstore(int $id)
+   {
+        $user = Auth::user();
+        $store = Store::find($id);
+
+        return view('layouts.mypage.store_edit', compact('user', 'store'));
+    
+   }
+
+   public function editstore(int $id, Request $request)
+   {
+   
+        $user = Auth::user();
+        $store = Store::find($id);
+
+        $request->validate([
+            'address' => 'required',
+            'name' => 'required',
+            'description' => 'required',
+            'image_path' => 'nullable|image',
+        ]);
+
+        $store->address = $request->address;
+        $store->name = $request->name;
+        $store->description = $request->description;
+        
+
+        if ($request->hasFile('image_path')) {
+            if ($store->image_path && \Storage::disk('public')->exists($store->image_path)) {
+                \Storage::disk('public')->delete($store->image_path);
+            }
+
+            $path = $request->file('image_path')->store('images', 'public');
+            $store->image_path = $path;
+        }
+
+        $store->save();
+
+        return redirect('/mypage');
+    }
+
+    public function destroy($id)
+    {
+        $user = Auth::user();
+        $store = Store::findOrFail($id);
+
+        if ($store->image_path && Storage::disk('public')->exists($store->image_path)) {
+            Storage::disk('public')->delete($store->image_path);
+        }
+        $store->delete();
+
+        return redirect('/mypage');
+    }
+
+
 
     
 

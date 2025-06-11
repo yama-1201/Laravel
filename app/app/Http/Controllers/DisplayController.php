@@ -19,7 +19,8 @@ class DisplayController extends Controller
     {
         // 検索
         $keyword = $request->input('keyword');
-        $rating = $request->input('rating');
+        $rating_min = $request->input('rating_min');
+        $rating_max = $request->input('rating_max');
         $query = Review::with('store')
             ->where('is_hedden', 0);
 
@@ -35,13 +36,17 @@ class DisplayController extends Controller
         }
 
         // レビュー点数検索
-        if (!empty($rating)) {
-            $query->where('rating', $rating);
+        if ($rating_min) {
+            $query->where('rating', '>=', $rating_min);
+        }
+
+        if ($rating_max) {
+            $query->where('rating', '<=', $rating_max);
         }
 
         $reviews = $query->get();
         
-      return view('layouts.shop.toppage', compact('keyword', 'rating','reviews'));
+      return view('layouts.shop.toppage', compact('keyword','reviews', 'rating_min', 'rating_max'));
     }
 
     public function toppage()
@@ -85,6 +90,12 @@ class DisplayController extends Controller
     {
         $user = Auth::user();
 
+        if ($user->role === 2) {
+            $stores = $user->stores()->latest()->take(3)->get();
+        } else {
+            $stores = collect(); 
+        }
+
         $reviews = $user->reviews()->latest()->take(3)->get();
 
         $bookmarks = $user->bookmarks()->withAvg('reviews', 'rating')->take(3)->get();
@@ -94,7 +105,7 @@ class DisplayController extends Controller
             return redirect('/login');
         }
 
-        return view('layouts.mypage.mypage',compact('user', 'reviews', 'bookmarks'));
+        return view('layouts.mypage.mypage',compact('user', 'reviews','stores', 'bookmarks'));
     }
 
     public function mypage()

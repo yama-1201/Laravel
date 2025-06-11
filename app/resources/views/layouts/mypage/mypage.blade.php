@@ -21,7 +21,37 @@
                             </div>
                         </div>
                         <div class="border-bottom border-secondary mt-5"></div>
-                        
+                    <!-- 店舗登録一覧 -->
+                    @auth
+                        @if (Auth::user()->role == 2)
+                            <h2 class="text-center mb-4 mt-5">登録店舗一覧</h2>
+                            <div class="container my-5">
+                                <div class="row row-cols-1 row-cols-md-3 g-4">
+                                    @forelse ($stores as $store)
+                                        <div class="col">
+                                            <div class="card h-100">
+                                                <img src="{{ asset('storage/' . $store->image_path) }}"  class="card-img-top img-fluid" alt="レビュー画像">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ $store->name }}</h5>
+                                                    <p class="card-text">住所: {{ $store->address }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <p class="text-center mb-0">まだ登録していません。</p>
+                                    </div>
+                                    @endforelse
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a href="{{ route('showStorepostall', ['id' => $user->id]) }}" class="btn btn-primary mx-5">登録店舗をすべて見る</a>
+                            </div>
+
+                            <div class="border-bottom border-secondary mt-5"></div>
+                        @endif
+                    @endauth    
+
                         <!-- 投稿一覧 -->
                         <h2 class="text-center mb-4 mt-5">投稿一覧</h2>
                         <div class="container my-5">
